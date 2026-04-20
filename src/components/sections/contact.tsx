@@ -89,8 +89,9 @@ export default function Contact() {
   const labelStyle = { color: "var(--color-fg-muted-on-dark)" } as const;
   const inputClass =
     "w-full rounded-md bg-transparent px-4 py-3 outline-none focus:ring-2 transition";
+  const inputBorder = "rgba(255, 255, 255, 0.24)";
   const inputStyle = {
-    border: "1px solid var(--color-border-on-dark)",
+    border: `1px solid ${inputBorder}`,
     color: "var(--color-fg-on-dark)",
   } as React.CSSProperties;
 
@@ -100,7 +101,7 @@ export default function Contact() {
   }
   function onBlur(e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) {
     e.currentTarget.style.boxShadow = "none";
-    e.currentTarget.style.borderColor = "var(--color-border-on-dark)";
+    e.currentTarget.style.borderColor = inputBorder;
   }
 
   return (

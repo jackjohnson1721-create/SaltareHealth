@@ -29,12 +29,45 @@ export default function WhyNowTimeline() {
 
   return (
     <div style={{ width: "100%", maxWidth: 960, margin: "0 auto" }}>
+      {/* Mobile: vertical list */}
+      <ol className="sm:hidden flex flex-col gap-5" aria-label="Why-now regulatory milestones">
+        {MILESTONES.map((m) => (
+          <li key={m.year} className="flex gap-4">
+            <span
+              className="shrink-0 inline-flex items-center justify-center rounded-full"
+              style={{
+                width: m.current ? 20 : 14,
+                height: m.current ? 20 : 14,
+                marginTop: 4,
+                background: m.current ? "var(--color-accent)" : "currentColor",
+              }}
+              aria-hidden
+            />
+            <div>
+              <div
+                className="text-base font-bold"
+                style={m.current ? { color: "var(--color-accent)" } : undefined}
+              >
+                {m.year}
+              </div>
+              <div
+                className="text-sm mt-1"
+                style={{ opacity: 0.85 }}
+              >
+                {m.desc}
+              </div>
+            </div>
+          </li>
+        ))}
+      </ol>
+      {/* Desktop/tablet: horizontal SVG timeline */}
       <svg
         viewBox={`0 0 ${vbW} ${vbH}`}
         preserveAspectRatio="xMidYMid meet"
         role="img"
         aria-labelledby={titleId}
-        style={{ width: "100%", height: "auto", display: "block" }}
+        className="hidden sm:block"
+        style={{ width: "100%", height: "auto" }}
       >
         <title id={titleId}>
           Why now: regulatory milestones from 2021 through 2025 to 2026 that make the business
@@ -103,6 +136,11 @@ export default function WhyNowTimeline() {
             />
           );
 
+          const isFirst = i === 0;
+          const isLast = i === MILESTONES.length - 1;
+          const textAnchor = isFirst ? "start" : isLast ? "end" : "middle";
+          const textX = isFirst ? cx - 8 : isLast ? cx + 8 : cx;
+
           return (
             <g key={m.year}>
               {/* Pulse ring for current */}
@@ -123,9 +161,9 @@ export default function WhyNowTimeline() {
 
               {/* Year label above */}
               <text
-                x={cx}
+                x={textX}
                 y={baselineY - 26}
-                textAnchor="middle"
+                textAnchor={textAnchor}
                 fontSize={16}
                 fontWeight={700}
                 style={isCurrent ? { fill: "var(--color-accent)" } : undefined}
@@ -134,17 +172,25 @@ export default function WhyNowTimeline() {
                 {m.year}
               </text>
 
-              {/* Description below */}
-              <text
-                x={cx}
-                y={baselineY + 34}
-                textAnchor="middle"
-                fontSize={11.5}
-                fill="currentColor"
-                opacity={0.85}
-              >
-                {m.desc}
-              </text>
+              {/* Description below — split on em-dash so long labels don't collide */}
+              {(() => {
+                const parts = m.desc.split(" — ");
+                return (
+                  <text
+                    x={textX}
+                    y={baselineY + 28}
+                    textAnchor={textAnchor}
+                    fontSize={11.5}
+                    fill="currentColor"
+                    opacity={0.85}
+                  >
+                    <tspan x={textX} dy="1em">{parts[0]}</tspan>
+                    {parts[1] ? (
+                      <tspan x={textX} dy="1.3em">{parts[1]}</tspan>
+                    ) : null}
+                  </text>
+                );
+              })()}
             </g>
           );
         })}

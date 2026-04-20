@@ -32,7 +32,7 @@ export default function Gap() {
           <div className="mt-12 grid grid-cols-1 gap-12 md:grid-cols-2 md:gap-8 items-end">
             <div>
               <div
-                className="display-xl leading-none"
+                className="display-lg leading-none"
                 style={{ color: "var(--color-accent)" }}
               >
                 <CountUp value={1000000} />

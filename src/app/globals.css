@@ -7,9 +7,9 @@
   --color-fg-on-light: #0A0A0B;
   --color-fg-muted-on-dark: rgba(255, 255, 255, 0.64);
   --color-fg-muted-on-light: rgba(10, 10, 11, 0.64);
-  --color-accent: #0066FF;
-  --color-accent-on-dark: #60A5FA;
-  --color-accent-soft: rgba(0, 102, 255, 0.12);
+  --color-accent: #A51C30;
+  --color-accent-on-dark: #F28B94;
+  --color-accent-soft: rgba(165, 28, 48, 0.12);
   --color-border-on-dark: rgba(255, 255, 255, 0.08);
   --color-border-on-light: rgba(10, 10, 11, 0.08);
 
