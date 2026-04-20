@@ -7,7 +7,6 @@ export default function WorkflowDiagram() {
   const reduced = useReducedMotion();
   const titleId = "workflow-diagram-title";
 
-  // Node centres
   const y = 140;
   const n1x = 140;
   const n2x = 480;

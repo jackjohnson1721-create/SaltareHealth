@@ -1,5 +1,3 @@
-"use client";
-
 // Owned by Section Builder C. Do not edit from other agents.
 import { Reveal } from "@/components/motion/reveal";
 

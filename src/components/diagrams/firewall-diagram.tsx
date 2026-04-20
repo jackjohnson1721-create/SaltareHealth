@@ -1,10 +1,7 @@
 // Owned by Diagram Artist. Do not edit from other agents.
-"use client";
-
 export default function FirewallDiagram() {
   const titleId = "firewall-diagram-title";
 
-  // Layout
   const leftX = 40;
   const leftW = 340;
   const rightX = 580;
@@ -13,7 +10,6 @@ export default function FirewallDiagram() {
   const boxH = 360;
   const barrierX = 480;
 
-  // Left chips (identifiable)
   const leftChips = [
     { label: "Patient name", y: 140, identifiable: true },
     { label: "MRN", y: 190, identifiable: true },
@@ -21,7 +17,6 @@ export default function FirewallDiagram() {
     { label: "Full EHR", y: 290, identifiable: false },
   ];
 
-  // Right chips (de-identified destinations)
   const rightChips = [
     { label: "De-identified vitals", y: 140 },
     { label: "Labs", y: 190 },

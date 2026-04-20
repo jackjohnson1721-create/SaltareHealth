@@ -67,9 +67,7 @@ export default function Contact() {
       let data: { ok?: boolean } = {};
       try {
         data = await res.json();
-      } catch {
-        // ignore parse failure — treat as error below
-      }
+      } catch {}
 
       if (res.ok && data.ok === true) {
         setStatus("success");
@@ -94,11 +92,8 @@ export default function Contact() {
   const inputStyle = {
     border: "1px solid var(--color-border-on-dark)",
     color: "var(--color-fg-on-dark)",
-    // focus ring colour supplied via inline style via a wrapping class is awkward,
-    // so rely on Tailwind's focus:ring with a CSS var fallback via boxShadow below
   } as React.CSSProperties;
 
-  // A helper for focus ring via inline style on focus events
   function onFocus(e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) {
     e.currentTarget.style.boxShadow = `0 0 0 2px var(--color-accent)`;
     e.currentTarget.style.borderColor = "var(--color-accent)";
@@ -164,7 +159,6 @@ export default function Contact() {
                 noValidate
                 className="w-full max-w-[880px]"
               >
-                {/* Honeypot — visually hidden, not announced */}
                 <div
                   aria-hidden="true"
                   style={{
@@ -188,7 +182,6 @@ export default function Contact() {
                   />
                 </div>
 
-                {/* Inquiry type — segmented control */}
                 <fieldset className="mb-8">
                   <legend className={labelClass} style={labelStyle}>
                     I am a…
@@ -208,9 +201,7 @@ export default function Contact() {
                             background: selected
                               ? "var(--color-accent)"
                               : "transparent",
-                            color: selected
-                              ? "#FFFFFF"
-                              : "var(--color-fg-on-dark)",
+                            color: "var(--color-fg-on-dark)",
                             borderColor: selected
                               ? "var(--color-accent)"
                               : "var(--color-border-on-dark)",
@@ -332,7 +323,7 @@ export default function Contact() {
                     className="rounded-full px-6 py-3 font-medium transition-opacity hover:opacity-90 disabled:opacity-60 disabled:cursor-not-allowed"
                     style={{
                       background: "var(--color-accent)",
-                      color: "#FFFFFF",
+                      color: "var(--color-fg-on-dark)",
                     }}
                   >
                     {status === "sending" ? "Sending…" : "Send"}

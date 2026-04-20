@@ -1,5 +1,3 @@
-"use client";
-
 // Owned by Section Builder A. Do not edit from other agents.
 import { Reveal } from "@/components/motion/reveal";
 
@@ -60,7 +58,7 @@ export default function Hero() {
               className="inline-flex items-center justify-center rounded-full px-6 py-3 font-medium transition-opacity hover:opacity-90"
               style={{
                 background: "var(--color-accent)",
-                color: "#FFFFFF",
+                color: "var(--color-fg-on-dark)",
               }}
             >
               Partner with us

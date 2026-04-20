@@ -39,8 +39,20 @@ function getClientIp(req: Request): string {
   return "unknown";
 }
 
+let sweepCounter = 0;
+function maybeSweep(now: number): void {
+  if (++sweepCounter % 100 !== 0) return;
+  const cutoff = now - RATE_WINDOW_MS;
+  for (const [ip, times] of rateBuckets) {
+    const recent = times.filter((t) => t > cutoff);
+    if (recent.length === 0) rateBuckets.delete(ip);
+    else if (recent.length < times.length) rateBuckets.set(ip, recent);
+  }
+}
+
 function isRateLimited(ip: string): boolean {
   const now = Date.now();
+  maybeSweep(now);
   const cutoff = now - RATE_WINDOW_MS;
   const prior = rateBuckets.get(ip) ?? [];
   const recent = prior.filter((t) => t > cutoff);

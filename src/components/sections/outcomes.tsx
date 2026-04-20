@@ -1,5 +1,3 @@
-"use client";
-
 // Owned by Section Builder B. Do not edit from other agents.
 import { Reveal } from "@/components/motion/reveal";
 import { CountUp } from "@/components/motion/count-up";
