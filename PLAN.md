@@ -119,6 +119,63 @@ public/
 .env.example                  # RESEND_API_KEY, CONTACT_TO_EMAIL
 ```
 
+## Agent team strategy
+
+The build is parallelizable: ~15 components, mostly disjoint files, with clear handoff points. Rather than a single linear pass by the main agent, dispatch a team of subagents in four batches, with quality-gate skills between them.
+
+### Team composition
+
+| Agent | Owns | Subagent type | Phase |
+|---|---|---|---|
+| Scaffolder | `package.json`, Tailwind v4 config, `src/app/layout.tsx`, `src/app/globals.css` (design tokens), `src/lib/cn.ts`, `src/components/motion/{reveal,count-up}.tsx`, `src/components/nav.tsx` skeleton | general-purpose | 1 — sequential, blocks all others |
+| Section Builder A | `hero.tsx`, `gap.tsx` | general-purpose | 2 — parallel |
+| Section Builder B | `workflow.tsx`, `why-now.tsx`, `outcomes.tsx` | general-purpose | 2 — parallel |
+| Section Builder C | `cmc-value.tsx`, `community-value.tsx`, `technology.tsx` | general-purpose | 2 — parallel |
+| Diagram Artist | `workflow-diagram.tsx`, `firewall-diagram.tsx`, `why-now-timeline.tsx` | general-purpose | 2 — parallel |
+| Backend | `contact.tsx`, `src/app/api/contact/route.ts`, `.env.example` | general-purpose | 2 — parallel |
+| Integrator | `src/app/page.tsx`, `footer.tsx`, runs `npm run build`, fixes type errors | main agent (no subagent) | 3 — sequential |
+| Playwright QA | Runs against `npm run dev`; writes screenshots/report to `qa/` | general-purpose with playwright MCP | 4 — parallel |
+| Deployer | Calls Vercel MCP `deploy_to_vercel` | main agent | 4 — parallel |
+
+### Coordination rules
+
+- **One source of truth for design tokens.** Scaffolder writes the palette, type scale, spacing, and motion easings as CSS custom properties in `globals.css` plus a typed `src/lib/tokens.ts` mirror. Section agents import or use the CSS vars. **No agent invents new colour or spacing values.**
+- **No shared-file collisions by construction.** Each Section Builder owns a disjoint set of files. Only the Integrator touches `page.tsx`. Only the Scaffolder + Integrator touch `globals.css`. Worktree isolation is off — disjoint ownership makes it unnecessary and merging would waste a phase.
+- **Self-contained briefs.** Each Section Builder gets: (a) the verbatim subsection of this plan as copy, (b) the file paths it owns, (c) the design-tokens contract (which CSS vars exist, which Tailwind utilities are blessed), (d) the motion convention (wrap blocks in `<Reveal>`; numbers use `<CountUp>`), (e) an explicit "do not touch" list. Briefs include enough context that the agent never needs to read PLAN.md or explore the repo.
+- **No exploration agents.** Greenfield repo; nothing to discover. Subagents must not run Glob/Grep over an empty `src/`.
+
+### Parallelization plan
+
+- **Batch 1 — 1 agent, sequential.** Scaffolder. Output: a buildable Next.js 15 app with empty section files exporting placeholder components, design tokens established, nav skeleton in place. Verifies with `npm run build`.
+- **Batch 2 — 5 agents, dispatched in a single message.** Section Builder A/B/C + Diagram Artist + Backend. Each writes only its own files.
+- **Batch 3 — main agent, sequential.** Integrator wires section imports into `page.tsx`, adds the footer, runs `npm run build` and `npm run lint`, fixes any TypeScript or lint errors directly (does not re-dispatch).
+- **Batch 4 — 2 agents, dispatched in a single message.** Playwright QA against the local dev server; Deployer pushes to a Vercel preview URL. Independent, so they parallelize cleanly.
+
+### Quality gates (using already-loaded skills)
+
+- After Batch 2, before Batch 3: invoke `/simplify` on the changed files to catch cross-section duplication, dead helpers, and over-abstraction.
+- After Batch 3, before Batch 4: invoke `/security-review` scoped to `src/app/api/contact/route.ts` (Zod schema strictness, no email-header injection in the Resend payload, no env-var leakage in error responses, rate-limit consideration).
+- After Batch 4, before requesting merge: invoke `/review` on the PR diff.
+
+### Playwright QA contract
+
+The Playwright QA agent verifies, against `http://localhost:3000`:
+
+1. Root route returns 200; no console errors; no 4xx/5xx network requests on initial paint.
+2. Three viewport screenshots saved to `qa/screenshots/{mobile,tablet,desktop}.png` at widths 390 / 834 / 1440.
+3. Each nav anchor scrolls to its section and the target is within the viewport after scroll settles.
+4. Contact form: submits successfully with valid input and shows the success state; rejects an obviously invalid email client-side or via API 400.
+5. `prefers-reduced-motion: reduce` disables `<Reveal>` transitions (no transform/opacity tween applied).
+6. axe-core injected via `browser_run_code` reports zero serious or critical violations.
+
+Output: a one-page `qa/report.md` punch list. Pass = ship; fail = dispatch one fix agent per discrete punch-list item rather than re-running the whole pipeline.
+
+### Failure handling
+
+- If a Section Builder ships a token violation (inline hex, off-scale spacing, ad-hoc font weight), the Integrator rejects and re-prompts that one agent citing the specific lines.
+- If Playwright finds a console error or layout break, file a single-line punch item and dispatch a targeted fix agent. Do not re-run upstream batches.
+- If the Vercel deploy fails, the Deployer reads `get_deployment_build_logs` and either fixes locally and redeploys (build error) or surfaces the runtime issue back to the Integrator (runtime error).
+
 ## Content guardrails (what I will NOT put on the public site)
 
 - Specific raise size ($2–4M)
@@ -145,11 +202,6 @@ Where a number appears on the public site, it's a *clinical* or *market-structur
 - **Resend API key** (or I'll use a free-tier-friendly alternative like Formspree with a stub). Optional at this stage.
 - **Vercel account** — do you have an existing Vercel team/project I should deploy into, or should I create a new project under your Vercel account via the MCP? (The MCP deploy tool will ask for team/project targeting.)
 - **Custom domain** — optional; the `*.vercel.app` preview URL works for initial review.
-
-## Known limitations this session
-
-- **Playwright MCP** won't activate until a Claude Code restart, so I can't do automated visual QA in this session. You'll review the Vercel preview URL in a browser instead, or we do Playwright-based QA in a follow-up session.
-- **Superpowers plugin** also activates on restart; its skills aren't available here. We don't need them for this build.
 
 ## Rough time/token budget
 
