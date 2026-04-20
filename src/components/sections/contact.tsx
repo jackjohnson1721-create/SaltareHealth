@@ -110,7 +110,7 @@ export default function Contact() {
     >
       <div className="container-narrow w-full">
         <Reveal delay={0}>
-          <p className="eyebrow" style={{ color: "var(--color-accent)" }}>
+          <p className="eyebrow" style={{ color: "var(--color-accent-on-dark)" }}>
             Contact
           </p>
         </Reveal>

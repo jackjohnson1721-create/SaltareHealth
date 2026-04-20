@@ -36,7 +36,7 @@ export default function Workflow() {
         <Reveal delay={0}>
           <p
             className="eyebrow"
-            style={{ color: "var(--color-accent)" }}
+            style={{ color: "var(--color-accent-on-dark)" }}
           >
             How Saltare works
           </p>
@@ -66,7 +66,7 @@ export default function Workflow() {
               >
                 <p
                   className="eyebrow"
-                  style={{ color: "var(--color-accent)" }}
+                  style={{ color: "var(--color-accent-on-dark)" }}
                 >
                   {step.number}
                 </p>

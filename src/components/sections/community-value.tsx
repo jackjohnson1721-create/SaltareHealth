@@ -31,7 +31,7 @@ export default function CommunityValue() {
         <Reveal delay={0}>
           <p
             className="eyebrow"
-            style={{ color: "var(--color-accent)" }}
+            style={{ color: "var(--color-accent-on-dark)" }}
           >
             For community hospitals
           </p>

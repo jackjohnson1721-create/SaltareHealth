@@ -1,0 +1,231 @@
+{
+  "started": "2026-04-20T17:03:15.366Z",
+  "tests": {
+    "health": {
+      "initialStatus": 200,
+      "consoleErrorCount": 0,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "badNetwork": [],
+      "faviconBad": [],
+      "pass": true
+    },
+    "screenshots": {
+      "viewports": {
+        "mobile": {
+          "path": "/home/user/SaltareHealth/qa/screenshots/mobile.png",
+          "ok": true
+        },
+        "tablet": {
+          "path": "/home/user/SaltareHealth/qa/screenshots/tablet.png",
+          "ok": true
+        },
+        "desktop": {
+          "path": "/home/user/SaltareHealth/qa/screenshots/desktop.png",
+          "ok": true
+        }
+      },
+      "pass": true
+    },
+    "navAnchors": {
+      "details": [
+        {
+          "target": "gap",
+          "pass": true,
+          "top": -0.5,
+          "scrollY": 989,
+          "exists": true
+        },
+        {
+          "target": "workflow",
+          "pass": true,
+          "top": -0.25,
+          "scrollY": 1952,
+          "exists": true
+        },
+        {
+          "target": "why-now",
+          "pass": true,
+          "top": -0.25,
+          "scrollY": 3082,
+          "exists": true
+        },
+        {
+          "target": "outcomes",
+          "pass": true,
+          "top": -0.25,
+          "scrollY": 3982,
+          "exists": true
+        },
+        {
+          "target": "cmc-value",
+          "pass": true,
+          "top": -0.25,
+          "scrollY": 4882,
+          "exists": true
+        },
+        {
+          "target": "community-value",
+          "pass": true,
+          "top": -0.25,
+          "scrollY": 5782,
+          "exists": true
+        },
+        {
+          "target": "technology",
+          "pass": true,
+          "top": -0.25,
+          "scrollY": 6682,
+          "exists": true
+        }
+      ],
+      "pass": true
+    },
+    "contactHappy": {
+      "apiRequests": [
+        {
+          "url": "http://localhost:3000/api/contact",
+          "status": 200
+        }
+      ],
+      "successVisible": true,
+      "successText": "We'll be in touch within two business days. — The Saltare team",
+      "pass": true
+    },
+    "emailValidation": {
+      "apiHit": false,
+      "hasError": true,
+      "errorText": "Please enter a valid email address.",
+      "successAppeared": false,
+      "path": "client-side check (noValidate is set on form)",
+      "pass": true
+    },
+    "reducedMotion": {
+      "matchMediaMatches": true,
+      "sampleData": [
+        {
+          "id": "hero",
+          "exists": true,
+          "sampled": true,
+          "tag": "P",
+          "opacity": "1",
+          "transform": "none",
+          "transition": "all"
+        },
+        {
+          "id": "gap",
+          "exists": true,
+          "sampled": true,
+          "tag": "P",
+          "opacity": "1",
+          "transform": "none",
+          "transition": "all"
+        },
+        {
+          "id": "workflow",
+          "exists": true,
+          "sampled": true,
+          "tag": "P",
+          "opacity": "1",
+          "transform": "none",
+          "transition": "all"
+        },
+        {
+          "id": "why-now",
+          "exists": true,
+          "sampled": true,
+          "tag": "P",
+          "opacity": "1",
+          "transform": "none",
+          "transition": "all"
+        },
+        {
+          "id": "outcomes",
+          "exists": true,
+          "sampled": true,
+          "tag": "P",
+          "opacity": "1",
+          "transform": "none",
+          "transition": "all"
+        },
+        {
+          "id": "cmc-value",
+          "exists": true,
+          "sampled": true,
+          "tag": "P",
+          "opacity": "1",
+          "transform": "none",
+          "transition": "all"
+        },
+        {
+          "id": "community-value",
+          "exists": true,
+          "sampled": true,
+          "tag": "P",
+          "opacity": "1",
+          "transform": "none",
+          "transition": "all"
+        },
+        {
+          "id": "technology",
+          "exists": true,
+          "sampled": true,
+          "tag": "P",
+          "opacity": "1",
+          "transform": "none",
+          "transition": "all"
+        },
+        {
+          "id": "contact",
+          "exists": true,
+          "sampled": true,
+          "tag": "P",
+          "opacity": "1",
+          "transform": "none",
+          "transition": "all"
+        }
+      ],
+      "allOpaque": true,
+      "noTransforms": true,
+      "pass": true
+    },
+    "axe": {
+      "totalViolations": 1,
+      "seriousCriticalCount": 1,
+      "seriousCritical": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=axeAPI",
+          "nodes": [
+            {
+              "target": [
+                ".z-10 > div:nth-child(1) > .eyebrow"
+              ],
+              "html": "<p class=\"eyebrow\" style=\"color:var(--color-accent)\">Saltare Health</p>"
+            }
+          ]
+        }
+      ],
+      "allViolations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=axeAPI",
+          "nodes": [
+            {
+              "target": [
+                ".z-10 > div:nth-child(1) > .eyebrow"
+              ],
+              "html": "<p class=\"eyebrow\" style=\"color:var(--color-accent)\">Saltare Health</p>"
+            }
+          ]
+        }
+      ],
+      "pass": false
+    }
+  },
+  "finished": "2026-04-20T17:03:45.140Z"
+}

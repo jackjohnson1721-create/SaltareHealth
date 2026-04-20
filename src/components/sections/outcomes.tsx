@@ -42,7 +42,7 @@ export default function Outcomes() {
         <Reveal delay={0}>
           <p
             className="eyebrow"
-            style={{ color: "var(--color-accent)" }}
+            style={{ color: "var(--color-accent-on-dark)" }}
           >
             Outcomes that matter
           </p>

@@ -24,7 +24,7 @@ export default function Hero() {
         <Reveal delay={0}>
           <p
             className="eyebrow"
-            style={{ color: "var(--color-accent)" }}
+            style={{ color: "var(--color-accent-on-dark)" }}
           >
             Saltare Health
           </p>
