@@ -203,7 +203,7 @@ export default function FirewallDiagram() {
           .filter((c) => c.identifiable)
           .map((c) => {
             const startX = chipLeftX + chipLeftW;
-            const stopX = barrierX - 14;
+            const stopX = barrierX - 13;
             return (
               <g key={`stop-${c.label}`}>
                 <line
@@ -215,69 +215,57 @@ export default function FirewallDiagram() {
                   strokeWidth={1.5}
                   opacity={0.6}
                 />
-                {/* stop/X symbol */}
+                {/* prohibition mark */}
                 <circle
-                  cx={barrierX - 6}
+                  cx={barrierX}
                   cy={c.y}
-                  r={8}
+                  r={11}
                   fill="none"
                   style={{ stroke: "var(--color-accent)" }}
-                  strokeWidth={1.75}
+                  strokeWidth={2}
                 />
                 <line
-                  x1={barrierX - 11}
-                  y1={c.y - 5}
-                  x2={barrierX - 1}
-                  y2={c.y + 5}
+                  x1={barrierX - 7}
+                  y1={c.y - 7}
+                  x2={barrierX + 7}
+                  y2={c.y + 7}
                   style={{ stroke: "var(--color-accent)" }}
-                  strokeWidth={1.75}
-                  strokeLinecap="round"
-                />
-                <line
-                  x1={barrierX - 11}
-                  y1={c.y + 5}
-                  x2={barrierX - 1}
-                  y2={c.y - 5}
-                  style={{ stroke: "var(--color-accent)" }}
-                  strokeWidth={1.75}
+                  strokeWidth={2}
                   strokeLinecap="round"
                 />
               </g>
             );
           })}
 
-        {/* Full EHR → filtered → de-identified signals: one arrow crossing with filter glyph */}
+        {/* Full EHR → filter → de-identified signals */}
         {(() => {
-          const srcY = 290; // Full EHR
-          const filterX = barrierX;
-          const filterY = srcY;
+          const cx = barrierX;
+          const cy = 290; // Full EHR row — funnel sits on this line, input is horizontal
           return (
             <g>
-              {/* arrow from Full EHR to filter */}
+              {/* horizontal arrow from Full EHR chip to funnel mouth */}
               <line
                 x1={chipLeftX + chipLeftW}
-                y1={srcY}
-                x2={filterX - 14}
-                y2={filterY}
+                y1={cy}
+                x2={cx - 18}
+                y2={cy}
                 stroke="currentColor"
                 strokeWidth={1.75}
               />
-              {/* Filter/funnel glyph on the barrier */}
-              <g>
-                <path
-                  d={`M ${filterX - 14} ${filterY - 12} L ${filterX + 14} ${filterY - 12} L ${filterX + 4} ${filterY} L ${filterX + 4} ${filterY + 12} L ${filterX - 4} ${filterY + 12} L ${filterX - 4} ${filterY} Z`}
-                  fill="none"
-                  style={{ stroke: "var(--color-accent)" }}
-                  strokeWidth={1.75}
-                  strokeLinejoin="round"
-                />
-              </g>
-              {/* arrows from filter out to each right chip */}
+              {/* horizontal trapezoid funnel: wide left, narrow right */}
+              <path
+                d={`M ${cx - 18} ${cy - 18} L ${cx + 18} ${cy - 8} L ${cx + 18} ${cy + 8} L ${cx - 18} ${cy + 18} Z`}
+                fill="none"
+                style={{ stroke: "var(--color-accent)" }}
+                strokeWidth={1.75}
+                strokeLinejoin="round"
+              />
+              {/* arrows from funnel throat to each right chip */}
               {rightChips.map((rc) => (
                 <line
                   key={`cross-${rc.label}`}
-                  x1={filterX + 14}
-                  y1={filterY}
+                  x1={cx + 18}
+                  y1={cy}
                   x2={chipRightX - 2}
                   y2={rc.y}
                   stroke="currentColor"
@@ -287,8 +275,8 @@ export default function FirewallDiagram() {
                 />
               ))}
               <text
-                x={filterX}
-                y={filterY + 30}
+                x={cx}
+                y={cy + 36}
                 textAnchor="middle"
                 fontSize={11}
                 fontWeight={600}
