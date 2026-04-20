@@ -7,9 +7,10 @@
   --color-fg-on-light: #0A0A0B;
   --color-fg-muted-on-dark: rgba(255, 255, 255, 0.64);
   --color-fg-muted-on-light: rgba(10, 10, 11, 0.64);
-  --color-accent: #A51C30;
-  --color-accent-on-dark: #F28B94;
-  --color-accent-soft: rgba(165, 28, 48, 0.12);
+  --color-bg-warm: #F5F1EA;
+  --color-accent: #0F766E;
+  --color-accent-on-dark: #34D399;
+  --color-accent-soft: rgba(15, 118, 110, 0.10);
   --color-border-on-dark: rgba(255, 255, 255, 0.08);
   --color-border-on-light: rgba(10, 10, 11, 0.08);
 
@@ -27,8 +28,8 @@
 }
 
 body {
-  background: var(--color-bg-dark);
-  color: var(--color-fg-on-dark);
+  background: var(--color-bg-light);
+  color: var(--color-fg-on-light);
   font-family: var(--font-sans), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -49,6 +50,11 @@ body {
 
 @utility section-light {
   background: var(--color-bg-light);
+  color: var(--color-fg-on-light);
+}
+
+@utility section-warm {
+  background: var(--color-bg-warm);
   color: var(--color-fg-on-light);
 }
 

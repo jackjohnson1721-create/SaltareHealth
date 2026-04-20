@@ -30,13 +30,13 @@ export default function Workflow() {
   return (
     <section
       id="workflow"
-      className="section-dark min-h-screen flex items-center"
+      className="section-light min-h-screen flex items-center"
     >
       <div className="container-narrow w-full py-24">
         <Reveal delay={0}>
           <p
             className="eyebrow"
-            style={{ color: "var(--color-accent-on-dark)" }}
+            style={{ color: "var(--color-accent)" }}
           >
             How Saltare works
           </p>
@@ -60,13 +60,13 @@ export default function Workflow() {
               <div
                 className="h-full rounded-lg"
                 style={{
-                  border: "1px solid var(--color-border-on-dark)",
+                  border: "1px solid var(--color-border-on-light)",
                   padding: "24px",
                 }}
               >
                 <p
                   className="eyebrow"
-                  style={{ color: "var(--color-accent-on-dark)" }}
+                  style={{ color: "var(--color-accent)" }}
                 >
                   {step.number}
                 </p>
@@ -74,7 +74,7 @@ export default function Workflow() {
                   className="mt-4 font-semibold"
                   style={{
                     fontSize: "var(--text-body-lg)",
-                    color: "var(--color-fg-on-dark)",
+                    color: "var(--color-fg-on-light)",
                   }}
                 >
                   {step.title}
@@ -82,7 +82,7 @@ export default function Workflow() {
                 <p
                   className="mt-3"
                   style={{
-                    color: "var(--color-fg-muted-on-dark)",
+                    color: "var(--color-fg-muted-on-light)",
                     fontSize: "var(--text-body)",
                     lineHeight: 1.5,
                   }}

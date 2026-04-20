@@ -25,13 +25,13 @@ export default function CommunityValue() {
   return (
     <section
       id="community-value"
-      className="section-dark min-h-screen flex items-center"
+      className="section-light min-h-screen flex items-center"
     >
       <div className="container-narrow w-full py-24">
         <Reveal delay={0}>
           <p
             className="eyebrow"
-            style={{ color: "var(--color-accent-on-dark)" }}
+            style={{ color: "var(--color-accent)" }}
           >
             For community hospitals
           </p>
@@ -40,7 +40,7 @@ export default function CommunityValue() {
         <Reveal delay={0.08}>
           <h2
             className="display-lg mt-6 max-w-[20ch]"
-            style={{ color: "var(--color-fg-on-dark)" }}
+            style={{ color: "var(--color-fg-on-light)" }}
           >
             Your patient, your margin, your autonomy.
           </h2>
@@ -52,20 +52,21 @@ export default function CommunityValue() {
               <article
                 className="h-full rounded-xl border p-6 transition-transform duration-300 hover:-translate-y-1"
                 style={{
-                  borderColor: "var(--color-border-on-dark)",
-                  background: "var(--color-bg-dark)",
+                  borderColor: "var(--color-border-on-light)",
+                  background: "var(--color-bg-light)",
+                  boxShadow: "0 1px 2px rgba(10,10,11,0.04)",
                 }}
               >
                 <h3
                   className="text-lg font-semibold"
-                  style={{ color: "var(--color-fg-on-dark)" }}
+                  style={{ color: "var(--color-fg-on-light)" }}
                 >
                   {card.title}
                 </h3>
                 <p
                   className="mt-3"
                   style={{
-                    color: "var(--color-fg-muted-on-dark)",
+                    color: "var(--color-fg-muted-on-light)",
                     fontSize: "var(--text-body)",
                     lineHeight: 1.5,
                   }}

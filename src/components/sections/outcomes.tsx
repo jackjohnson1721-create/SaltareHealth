@@ -36,13 +36,13 @@ export default function Outcomes() {
   return (
     <section
       id="outcomes"
-      className="section-dark min-h-screen flex items-center"
+      className="section-light min-h-screen flex items-center"
     >
       <div className="container-narrow w-full py-24">
         <Reveal delay={0}>
           <p
             className="eyebrow"
-            style={{ color: "var(--color-accent-on-dark)" }}
+            style={{ color: "var(--color-accent)" }}
           >
             Outcomes that matter
           </p>
@@ -67,13 +67,13 @@ export default function Outcomes() {
                   </span>
                   <span
                     className="eyebrow"
-                    style={{ color: "var(--color-fg-muted-on-dark)" }}
+                    style={{ color: "var(--color-fg-muted-on-light)" }}
                   >
                     vs
                   </span>
                   <span
                     className="display-md"
-                    style={{ color: "var(--color-fg-muted-on-dark)" }}
+                    style={{ color: "var(--color-fg-muted-on-light)" }}
                   >
                     <CountUp value={pair.negative} suffix="%" />
                   </span>
@@ -81,7 +81,7 @@ export default function Outcomes() {
                 <p
                   className="mt-4"
                   style={{
-                    color: "var(--color-fg-muted-on-dark)",
+                    color: "var(--color-fg-muted-on-light)",
                     fontSize: "var(--text-body)",
                     lineHeight: 1.5,
                   }}
@@ -105,7 +105,7 @@ export default function Outcomes() {
               <p
                 className="mt-4"
                 style={{
-                  color: "var(--color-fg-muted-on-dark)",
+                  color: "var(--color-fg-muted-on-light)",
                   fontSize: "var(--text-body)",
                   lineHeight: 1.5,
                 }}
@@ -120,7 +120,7 @@ export default function Outcomes() {
           <p
             className="mt-16"
             style={{
-              color: "var(--color-fg-muted-on-dark)",
+              color: "var(--color-fg-muted-on-light)",
               fontSize: "var(--text-eyebrow)",
               letterSpacing: "0.02em",
             }}

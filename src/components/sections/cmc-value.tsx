@@ -25,7 +25,7 @@ export default function CmcValue() {
   return (
     <section
       id="cmc-value"
-      className="section-light min-h-screen flex items-center"
+      className="section-warm min-h-screen flex items-center"
     >
       <div className="container-narrow w-full py-24">
         <Reveal delay={0}>
@@ -54,6 +54,7 @@ export default function CmcValue() {
                 style={{
                   borderColor: "var(--color-border-on-light)",
                   background: "var(--color-bg-light)",
+                  boxShadow: "0 1px 2px rgba(10,10,11,0.04)",
                 }}
               >
                 <h3

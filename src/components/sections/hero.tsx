@@ -5,7 +5,7 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="section-dark relative min-h-screen flex items-center overflow-hidden"
+      className="section-light relative min-h-screen flex items-center overflow-hidden"
     >
       <div
         aria-hidden="true"
@@ -24,7 +24,7 @@ export default function Hero() {
         <Reveal delay={0}>
           <p
             className="eyebrow"
-            style={{ color: "var(--color-accent-on-dark)" }}
+            style={{ color: "var(--color-accent)" }}
           >
             Saltare Health
           </p>
@@ -40,7 +40,7 @@ export default function Hero() {
           <p
             className="mt-8 max-w-[720px]"
             style={{
-              color: "var(--color-fg-muted-on-dark)",
+              color: "var(--color-fg-muted-on-light)",
               fontSize: "var(--text-body-lg)",
               lineHeight: 1.5,
             }}
@@ -66,7 +66,7 @@ export default function Hero() {
             <a
               href="#workflow"
               className="inline-flex items-center gap-2 text-sm hover:underline"
-              style={{ color: "var(--color-fg-on-dark)" }}
+              style={{ color: "var(--color-fg-on-light)" }}
             >
               See how it works
               <span aria-hidden="true">↓</span>

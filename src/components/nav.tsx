@@ -20,14 +20,14 @@ export default function Nav() {
     <header
       className={cn(
         "fixed inset-x-0 top-0 z-50",
-        "border-b border-white/[0.08]",
-        "bg-[color:var(--color-bg-dark)]/70 backdrop-blur-md",
+        "border-b border-black/[0.06]",
+        "bg-[color:var(--color-bg-light)]/80 backdrop-blur-md",
       )}
     >
       <div className="container-narrow flex h-14 items-center justify-between">
         <a
           href="#hero"
-          className="text-sm font-semibold tracking-tight text-[color:var(--color-fg-on-dark)]"
+          className="text-sm font-semibold tracking-tight text-[color:var(--color-fg-on-light)]"
         >
           Saltare
         </a>
@@ -37,7 +37,7 @@ export default function Nav() {
             <a
               key={link.href}
               href={link.href}
-              className="text-sm text-[color:var(--color-fg-muted-on-dark)] transition-colors hover:text-[color:var(--color-fg-on-dark)]"
+              className="text-sm text-[color:var(--color-fg-muted-on-light)] transition-colors hover:text-[color:var(--color-fg-on-light)]"
             >
               {link.label}
             </a>
@@ -55,7 +55,7 @@ export default function Nav() {
           aria-expanded={open}
           aria-controls="mobile-nav"
           aria-label="Toggle menu"
-          className="md:hidden text-sm text-[color:var(--color-fg-on-dark)]"
+          className="md:hidden text-sm text-[color:var(--color-fg-on-light)]"
           onClick={() => setOpen((v) => !v)}
         >
           {open ? "Close" : "Menu"}
@@ -65,7 +65,7 @@ export default function Nav() {
       {open ? (
         <nav
           id="mobile-nav"
-          className="md:hidden border-t border-white/[0.08] bg-[color:var(--color-bg-dark)]"
+          className="md:hidden border-t border-black/[0.06] bg-[color:var(--color-bg-light)]"
         >
           <div className="container-narrow flex flex-col gap-3 py-4">
             {NAV_LINKS.map((link) => (
@@ -73,7 +73,7 @@ export default function Nav() {
                 key={link.href}
                 href={link.href}
                 onClick={() => setOpen(false)}
-                className="text-sm text-[color:var(--color-fg-muted-on-dark)] hover:text-[color:var(--color-fg-on-dark)]"
+                className="text-sm text-[color:var(--color-fg-muted-on-light)] hover:text-[color:var(--color-fg-on-light)]"
               >
                 {link.label}
               </a>

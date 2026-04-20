@@ -34,7 +34,7 @@ export default function Technology() {
   return (
     <section
       id="technology"
-      className="section-light min-h-screen flex items-center"
+      className="section-warm min-h-screen flex items-center"
     >
       <div className="container-narrow w-full py-24">
         <Reveal delay={0}>
