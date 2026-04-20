@@ -1,0 +1,84 @@
+@import "tailwindcss";
+
+:root {
+  --color-bg-dark: #0A0A0B;
+  --color-bg-light: #FFFFFF;
+  --color-fg-on-dark: #FFFFFF;
+  --color-fg-on-light: #0A0A0B;
+  --color-fg-muted-on-dark: rgba(255, 255, 255, 0.64);
+  --color-fg-muted-on-light: rgba(10, 10, 11, 0.64);
+  --color-accent: #0066FF;
+  --color-accent-soft: rgba(0, 102, 255, 0.12);
+  --color-border-on-dark: rgba(255, 255, 255, 0.08);
+  --color-border-on-light: rgba(10, 10, 11, 0.08);
+
+  --text-display-xl: clamp(64px, 10vw, 140px);
+  --text-display-lg: clamp(48px, 7vw, 96px);
+  --text-display-md: clamp(36px, 5vw, 64px);
+  --text-body-lg: 20px;
+  --text-body: 18px;
+  --text-eyebrow: 13px;
+
+  --tracking-display: -0.04em;
+  --tracking-eyebrow: 0.12em;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+body {
+  background: var(--color-bg-dark);
+  color: var(--color-fg-on-dark);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: var(--text-body);
+  line-height: 1.5;
+}
+
+@utility container-narrow {
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+@utility section-dark {
+  background: var(--color-bg-dark);
+  color: var(--color-fg-on-dark);
+}
+
+@utility section-light {
+  background: var(--color-bg-light);
+  color: var(--color-fg-on-light);
+}
+
+@utility eyebrow {
+  font-size: var(--text-eyebrow);
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+@utility display-xl {
+  font-size: var(--text-display-xl);
+  letter-spacing: var(--tracking-display);
+  line-height: 0.95;
+  font-weight: 600;
+}
+
+@utility display-lg {
+  font-size: var(--text-display-lg);
+  letter-spacing: var(--tracking-display);
+  line-height: 1;
+  font-weight: 600;
+}
+
+@utility display-md {
+  font-size: var(--text-display-md);
+  letter-spacing: var(--tracking-display);
+  line-height: 1.05;
+  font-weight: 600;
+}
+
+@utility text-accent {
+  color: var(--color-accent);
+}
