@@ -2,16 +2,18 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 
-const Schema = z.object({
-  name: z.string().trim().min(1).max(100),
-  organization: z.string().trim().min(1).max(150),
-  role: z.string().trim().min(1).max(100),
-  email: z.string().trim().email().max(200),
-  message: z.string().trim().min(1).max(2000),
-  inquiryType: z.enum(["Investor", "Health system", "Clinical partner", "Other"]),
-  // Honeypot — bots fill this in. Must be empty or absent.
-  website: z.string().max(0).optional(),
-});
+const Schema = z
+  .object({
+    name: z.string().trim().min(1).max(100),
+    organization: z.string().trim().min(1).max(150),
+    role: z.string().trim().min(1).max(100),
+    email: z.string().trim().email().max(200),
+    message: z.string().trim().min(1).max(2000),
+    inquiryType: z.enum(["Investor", "Health system", "Clinical partner", "Other"]),
+    // Honeypot — bots fill this in. Must be empty or absent.
+    website: z.string().max(0).optional(),
+  })
+  .strict();
 
 type ContactPayload = z.infer<typeof Schema>;
 
@@ -28,6 +30,9 @@ const RATE_WINDOW_MS = 60 * 60 * 1000; // 1 hour
 const RATE_MAX = 5;
 const rateBuckets: Map<string, number[]> = new Map();
 
+// x-forwarded-for is trustworthy only when set by a trusted proxy. On Vercel
+// the platform rewrites the header; off-platform (self-hosted, exposed directly)
+// it is client-controlled and the rate limiter is effectively spoofable.
 function getClientIp(req: Request): string {
   const fwd = req.headers.get("x-forwarded-for");
   if (fwd) {
@@ -117,7 +122,7 @@ export async function POST(req: Request): Promise<Response> {
     typeof raw === "object" &&
     "website" in raw &&
     typeof (raw as { website?: unknown }).website === "string" &&
-    ((raw as { website: string }).website as string).length > 0
+    (raw as { website: string }).website.trim().length > 0
   ) {
     return NextResponse.json({ ok: true }, { status: 200 });
   }
@@ -144,9 +149,13 @@ export async function POST(req: Request): Promise<Response> {
   const apiKey = process.env.RESEND_API_KEY;
   const toEmail = process.env.CONTACT_TO_EMAIL;
 
-  // Strip CR/LF from organization before putting it in the subject line to
-  // prevent header injection. Zod already clamps length.
-  const safeOrg = data.organization.replace(/[\r\n]+/g, " ");
+  // Strip header-terminating characters from organization before interpolating
+  // into the subject: CR, LF, NUL, NEL (U+0085), LS (U+2028), PS (U+2029).
+  // Zod already clamps length.
+  const safeOrg = data.organization.replace(
+    /[\r\n\u0000\u0085\u2028\u2029]+/g,
+    " ",
+  );
   const subject = `[Saltare] New ${data.inquiryType} inquiry — ${safeOrg}`;
   const textBody = buildEmailBody(data);
 
