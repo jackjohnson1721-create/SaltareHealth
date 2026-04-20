@@ -7,6 +7,7 @@ export const tokens = {
     fgMutedOnDark: "rgba(255,255,255,0.64)",
     fgMutedOnLight: "rgba(10,10,11,0.64)",
     accent: "#0066FF",
+    accentOnDark: "#60A5FA",
     accentSoft: "rgba(0,102,255,0.12)",
     borderOnDark: "rgba(255,255,255,0.08)",
     borderOnLight: "rgba(10,10,11,0.08)",
