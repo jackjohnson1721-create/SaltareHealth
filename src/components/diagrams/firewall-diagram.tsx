@@ -2,33 +2,31 @@
 export default function FirewallDiagram() {
   const titleId = "firewall-diagram-title";
 
-  const leftX = 40;
-  const leftW = 340;
-  const rightX = 580;
-  const rightW = 340;
-  const boxY = 60;
-  const boxH = 360;
-  const barrierX = 480;
+  const vaultX = 40;
+  const vaultY = 60;
+  const vaultW = 320;
+  const vaultH = 360;
 
-  const leftChips = [
-    { label: "Patient name", y: 140, identifiable: true },
-    { label: "MRN", y: 190, identifiable: true },
-    { label: "DOB", y: 240, identifiable: true },
-    { label: "Full EHR", y: 290, identifiable: false },
+  const cloudX = 600;
+  const cloudY = 60;
+  const cloudW = 320;
+  const cloudH = 360;
+
+  const pipeY = vaultY + vaultH / 2; // 240
+  const pipeLeft = vaultX + vaultW; // 360
+  const pipeRight = cloudX; // 600
+  const pipeTop = pipeY - 18;
+  const pipeBot = pipeY + 18;
+  const filterLeft = 440;
+  const filterRight = 520;
+
+  const identifiers = ["Patient name", "MRN", "DOB", "Full EHR"];
+  const signals = [
+    "De-identified vitals",
+    "Labs",
+    "Imaging findings",
+    "ELSO/Berlin/SCAI flags",
   ];
-
-  const rightChips = [
-    { label: "De-identified vitals", y: 140 },
-    { label: "Labs", y: 190 },
-    { label: "Imaging findings", y: 240 },
-    { label: "ELSO/Berlin/SCAI flags", y: 290 },
-  ];
-
-  const chipH = 30;
-  const chipLeftX = leftX + 30;
-  const chipLeftW = leftW - 60;
-  const chipRightX = rightX + 30;
-  const chipRightW = rightW - 60;
 
   return (
     <div style={{ width: "100%", maxWidth: 960, margin: "0 auto" }}>
@@ -40,8 +38,8 @@ export default function FirewallDiagram() {
         style={{ width: "100%", height: "auto", display: "block" }}
       >
         <title id={titleId}>
-          Patient-identity firewall: identifiers stay on-prem; only de-identified clinical signals
-          reach the Saltare cloud
+          Patient-identity firewall: identifiers stay on-prem in the community hospital; only
+          de-identified clinical signals pass through the de-identification filter to the Saltare cloud
         </title>
 
         <defs>
@@ -50,243 +48,239 @@ export default function FirewallDiagram() {
             viewBox="0 0 10 10"
             refX="9"
             refY="5"
-            markerWidth="7"
-            markerHeight="7"
+            markerWidth="8"
+            markerHeight="8"
             orient="auto-start-reverse"
           >
             <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor" />
           </marker>
         </defs>
 
-        {/* Left box: Community hospital */}
-        <rect
-          x={leftX}
-          y={boxY}
-          width={leftW}
-          height={boxH}
-          rx={14}
-          fill="none"
-          stroke="currentColor"
-          strokeWidth={1.5}
-          opacity={0.85}
-        />
-        <text
-          x={leftX + leftW / 2}
-          y={boxY + 30}
-          textAnchor="middle"
-          fill="currentColor"
-          fontSize={15}
-          fontWeight={700}
-        >
-          Community hospital (on-prem)
-        </text>
-        <text
-          x={leftX + leftW / 2}
-          y={boxY + 52}
-          textAnchor="middle"
-          fill="currentColor"
-          fontSize={11}
-          opacity={0.7}
-        >
-          Identifiable data stays here
-        </text>
+        {/* LEFT — vault (solid tint) */}
+        <g>
+          <rect
+            x={vaultX}
+            y={vaultY}
+            width={vaultW}
+            height={vaultH}
+            rx={10}
+            fill="currentColor"
+            fillOpacity={0.04}
+            stroke="currentColor"
+            strokeWidth={1.5}
+          />
 
-        {leftChips.map((c) => (
-          <g key={c.label}>
-            <rect
-              x={chipLeftX}
-              y={c.y - chipH / 2}
-              width={chipLeftW}
-              height={chipH}
-              rx={15}
+          {/* Lock emblem — top-right of vault */}
+          <g transform={`translate(${vaultX + vaultW - 34}, ${vaultY + 28})`}>
+            <path
+              d="M -7 0 A 7 7 0 0 1 7 0"
               fill="none"
-              stroke="currentColor"
-              strokeWidth={1.25}
-              opacity={0.6}
+              style={{ stroke: "var(--color-accent)" }}
+              strokeWidth={1.75}
             />
-            <text
-              x={chipLeftX + chipLeftW / 2}
-              y={c.y + 4}
-              textAnchor="middle"
-              fill="currentColor"
-              fontSize={12}
-              opacity={0.85}
-            >
-              {c.label}
-            </text>
-          </g>
-        ))}
-
-        {/* Right box: Saltare cloud */}
-        <rect
-          x={rightX}
-          y={boxY}
-          width={rightW}
-          height={boxH}
-          rx={14}
-          fill="none"
-          stroke="currentColor"
-          strokeWidth={1.5}
-          opacity={0.85}
-        />
-        <text
-          x={rightX + rightW / 2}
-          y={boxY + 30}
-          textAnchor="middle"
-          fill="currentColor"
-          fontSize={15}
-          fontWeight={700}
-        >
-          Saltare cloud
-        </text>
-        <text
-          x={rightX + rightW / 2}
-          y={boxY + 52}
-          textAnchor="middle"
-          fill="currentColor"
-          fontSize={11}
-          opacity={0.7}
-        >
-          De-identified clinical signals only
-        </text>
-
-        {rightChips.map((c) => (
-          <g key={c.label}>
             <rect
-              x={chipRightX}
-              y={c.y - chipH / 2}
-              width={chipRightW}
-              height={chipH}
-              rx={15}
-              style={{ fill: "var(--color-accent-soft)" }}
-              stroke="currentColor"
-              strokeWidth={1.25}
-              opacity={0.9}
+              x={-10}
+              y={0}
+              width={20}
+              height={14}
+              rx={2}
+              fill="var(--color-bg-light)"
+              style={{ stroke: "var(--color-accent)" }}
+              strokeWidth={1.75}
             />
-            <text
-              x={chipRightX + chipRightW / 2}
-              y={c.y + 4}
-              textAnchor="middle"
-              fill="currentColor"
-              fontSize={12}
-              fontWeight={500}
-            >
-              {c.label}
-            </text>
+            <circle cx={0} cy={7} r={1.75} style={{ fill: "var(--color-accent)" }} />
           </g>
-        ))}
 
-        {/* Barrier — dashed vertical line in accent */}
-        <line
-          x1={barrierX}
-          y1={boxY - 10}
-          x2={barrierX}
-          y2={boxY + boxH + 10}
-          strokeWidth={2.5}
-          strokeDasharray="8 6"
-          style={{ stroke: "var(--color-accent)" }}
-        />
-        {/* Barrier label (rotated) */}
-        <text
-          x={barrierX}
-          y={boxY - 22}
-          textAnchor="middle"
-          fontSize={12}
-          fontWeight={700}
-          style={{ fill: "var(--color-accent)" }}
-        >
-          Patient-identity firewall
-        </text>
+          {/* Heading */}
+          <text
+            x={vaultX + 24}
+            y={vaultY + 40}
+            fontSize={15}
+            fontWeight={700}
+            fill="currentColor"
+          >
+            Community hospital
+          </text>
+          <text
+            x={vaultX + 24}
+            y={vaultY + 60}
+            fontSize={11}
+            fill="currentColor"
+            opacity={0.7}
+          >
+            Identifiable data — stays on-prem
+          </text>
 
-        {/* Identifier arrows — STOP at the barrier */}
-        {leftChips
-          .filter((c) => c.identifiable)
-          .map((c) => {
-            const startX = chipLeftX + chipLeftW;
-            const stopX = barrierX - 13;
+          {/* Identifier items */}
+          {identifiers.map((label, i) => {
+            const itemY = vaultY + 130 + i * 52;
             return (
-              <g key={`stop-${c.label}`}>
+              <g key={label}>
                 <line
-                  x1={startX}
-                  y1={c.y}
-                  x2={stopX}
-                  y2={c.y}
+                  x1={vaultX + 24}
+                  y1={itemY}
+                  x2={vaultX + 40}
+                  y2={itemY}
                   stroke="currentColor"
                   strokeWidth={1.5}
-                  opacity={0.6}
+                  opacity={0.5}
                 />
-                {/* prohibition mark */}
-                <circle
-                  cx={barrierX}
-                  cy={c.y}
-                  r={11}
-                  fill="none"
-                  style={{ stroke: "var(--color-accent)" }}
-                  strokeWidth={2}
-                />
-                <line
-                  x1={barrierX - 7}
-                  y1={c.y - 7}
-                  x2={barrierX + 7}
-                  y2={c.y + 7}
-                  style={{ stroke: "var(--color-accent)" }}
-                  strokeWidth={2}
-                  strokeLinecap="round"
-                />
+                <text
+                  x={vaultX + 50}
+                  y={itemY + 4}
+                  fontSize={13}
+                  fill="currentColor"
+                  opacity={0.9}
+                >
+                  {label}
+                </text>
               </g>
             );
           })}
+        </g>
 
-        {/* Full EHR → filter → de-identified signals */}
-        {(() => {
-          const cx = barrierX;
-          const cy = 290; // Full EHR row — funnel sits on this line, input is horizontal
-          return (
-            <g>
-              {/* horizontal arrow from Full EHR chip to funnel mouth */}
-              <line
-                x1={chipLeftX + chipLeftW}
-                y1={cy}
-                x2={cx - 18}
-                y2={cy}
-                stroke="currentColor"
-                strokeWidth={1.75}
-              />
-              {/* horizontal trapezoid funnel: wide left, narrow right */}
-              <path
-                d={`M ${cx - 18} ${cy - 18} L ${cx + 18} ${cy - 8} L ${cx + 18} ${cy + 8} L ${cx - 18} ${cy + 18} Z`}
-                fill="none"
-                style={{ stroke: "var(--color-accent)" }}
-                strokeWidth={1.75}
-                strokeLinejoin="round"
-              />
-              {/* arrows from funnel throat to each right chip */}
-              {rightChips.map((rc) => (
+        {/* PIPE with filter */}
+        <g>
+          {/* De-identify label */}
+          <text
+            x={(pipeLeft + pipeRight) / 2}
+            y={pipeY - 34}
+            textAnchor="middle"
+            fontSize={12}
+            fontWeight={700}
+            style={{ fill: "var(--color-accent)" }}
+          >
+            De-identify
+          </text>
+
+          {/* Pipe body — two parallel lines */}
+          <line
+            x1={pipeLeft}
+            y1={pipeTop}
+            x2={pipeRight}
+            y2={pipeTop}
+            stroke="currentColor"
+            strokeWidth={1.5}
+          />
+          <line
+            x1={pipeLeft}
+            y1={pipeBot}
+            x2={pipeRight}
+            y2={pipeBot}
+            stroke="currentColor"
+            strokeWidth={1.5}
+          />
+
+          {/* Filter housing */}
+          <rect
+            x={filterLeft}
+            y={pipeTop - 4}
+            width={filterRight - filterLeft}
+            height={pipeBot - pipeTop + 8}
+            fill="var(--color-bg-light)"
+            style={{ stroke: "var(--color-accent)" }}
+            strokeWidth={1.75}
+            rx={4}
+          />
+
+          {/* Mesh lines — vertical */}
+          {Array.from({ length: 7 }).map((_, i) => (
+            <line
+              key={i}
+              x1={filterLeft + 10 + i * 10}
+              y1={pipeTop - 1}
+              x2={filterLeft + 10 + i * 10}
+              y2={pipeBot + 1}
+              style={{ stroke: "var(--color-accent)" }}
+              strokeWidth={1}
+              opacity={0.55}
+            />
+          ))}
+
+          {/* Arrow head entering the cloud */}
+          <line
+            x1={filterRight}
+            y1={pipeY}
+            x2={pipeRight - 2}
+            y2={pipeY}
+            stroke="currentColor"
+            strokeWidth={2}
+            markerEnd="url(#fw-arrow-current)"
+          />
+        </g>
+
+        {/* RIGHT — cloud (dashed outline + cloud emblem) */}
+        <g>
+          <rect
+            x={cloudX}
+            y={cloudY}
+            width={cloudW}
+            height={cloudH}
+            rx={10}
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={1.5}
+            strokeDasharray="6 5"
+            opacity={0.85}
+          />
+
+          {/* Cloud emblem — top-right */}
+          <g transform={`translate(${cloudX + cloudW - 70}, ${cloudY + 30})`}>
+            <path
+              d="M 6 14 C -2 14 -2 4 6 3 C 7 -5 21 -7 25 1 C 29 -6 44 -3 43 6 C 50 6 50 14 44 14 Z"
+              fill="var(--color-bg-light)"
+              style={{ stroke: "var(--color-accent)" }}
+              strokeWidth={1.75}
+              strokeLinejoin="round"
+            />
+          </g>
+
+          {/* Heading */}
+          <text
+            x={cloudX + 24}
+            y={cloudY + 40}
+            fontSize={15}
+            fontWeight={700}
+            fill="currentColor"
+          >
+            Saltare cloud
+          </text>
+          <text
+            x={cloudX + 24}
+            y={cloudY + 60}
+            fontSize={11}
+            fill="currentColor"
+            opacity={0.7}
+          >
+            De-identified clinical signals
+          </text>
+
+          {/* Signal items */}
+          {signals.map((label, i) => {
+            const itemY = cloudY + 130 + i * 52;
+            return (
+              <g key={label}>
                 <line
-                  key={`cross-${rc.label}`}
-                  x1={cx + 18}
-                  y1={cy}
-                  x2={chipRightX - 2}
-                  y2={rc.y}
-                  stroke="currentColor"
-                  strokeWidth={1.5}
-                  opacity={0.7}
-                  markerEnd="url(#fw-arrow-current)"
+                  x1={cloudX + 24}
+                  y1={itemY}
+                  x2={cloudX + 40}
+                  y2={itemY}
+                  style={{ stroke: "var(--color-accent)" }}
+                  strokeWidth={1.75}
                 />
-              ))}
-              <text
-                x={cx}
-                y={cy + 36}
-                textAnchor="middle"
-                fontSize={11}
-                fontWeight={600}
-                style={{ fill: "var(--color-accent)" }}
-              >
-                De-identify
-              </text>
-            </g>
-          );
-        })()}
+                <text
+                  x={cloudX + 50}
+                  y={itemY + 4}
+                  fontSize={13}
+                  fill="currentColor"
+                  fontWeight={500}
+                >
+                  {label}
+                </text>
+              </g>
+            );
+          })}
+        </g>
       </svg>
     </div>
   );
