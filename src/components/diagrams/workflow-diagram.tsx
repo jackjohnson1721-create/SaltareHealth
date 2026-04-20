@@ -76,7 +76,6 @@ export default function WorkflowDiagram() {
             fill="none"
             stroke="currentColor"
             strokeWidth={2}
-            markerEnd="url(#wf-arrow-current)"
           />
         ) : (
           <motion.path
@@ -84,7 +83,6 @@ export default function WorkflowDiagram() {
             fill="none"
             stroke="currentColor"
             strokeWidth={2}
-            markerEnd="url(#wf-arrow-current)"
             initial={{ pathLength: 0 }}
             whileInView={{ pathLength: 1 }}
             viewport={{ once: true, margin: "-10% 0px" }}
@@ -99,8 +97,17 @@ export default function WorkflowDiagram() {
           style={{ stroke: "var(--color-accent)" }}
           strokeWidth={2}
           strokeDasharray="6 5"
-          markerEnd="url(#wf-arrow-accent)"
         />
+
+        {/* Outbound flow arrow — mid-arc, between Confirmation and Transfer */}
+        <g transform="translate(650, 99) rotate(13.4)">
+          <path d="M 0 0 L -11 -5 L -11 5 Z" fill="currentColor" />
+        </g>
+
+        {/* Return flow arrow — mid-arc on lower arc, heading back to Community */}
+        <g transform="translate(186, 290) rotate(-144.6)">
+          <path d="M 0 0 L -11 -5 L -11 5 Z" style={{ fill: "var(--color-accent)" }} />
+        </g>
 
         {/* Repatriation label (below lower arc) */}
         <text
